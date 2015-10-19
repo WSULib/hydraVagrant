@@ -28,3 +28,5 @@ SOLR_VERSION=4.10.3
 SOLR_HOME=/var/lib/tomcat7/solr
 
 KARAF_VERSION=4.0.1
+
+HYDRA_DIR="webapps/hydra"

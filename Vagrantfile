@@ -10,9 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "ubuntu/trusty64"
 
+  config.vm.network :forwarded_port, guest: 80, host: 3000 # Apache/Passenger/Hydra
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
   config.vm.network :forwarded_port, guest: 9080, host: 9080 # Fixity and Reindexing
-  config.vm.network :forwarded_port, guest: 3000, host: 3000 # Hydra3000
 
   config.vm.provider "virtualbox" do |vb|
    # vb.memory = 5120
@@ -30,7 +30,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", path: "./install_scripts/fuseki.sh", args: shared_dir
   config.vm.provision "shell", path: "./install_scripts/karaf.sh", args: shared_dir
   config.vm.provision "shell", path: "./install_scripts/fedora_camel_toolbox.sh", args: shared_dir
-  config.vm.provision "shell", path: "./install_scripts/imagemagick.sh"
+  config.vm.provision "shell", path: "./install_scripts/imagemagick.sh", args: shared_dir
   config.vm.provision "shell", path: "./install_scripts/hydra.sh", args: shared_dir
+  config.vm.provision "shell", path: "./install_scripts/apache2.sh", args: shared_dir  
 
 end

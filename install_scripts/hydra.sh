@@ -17,9 +17,13 @@ apt-get install -y software-properties-common ruby2.2 ruby2.2-dev oracle-java8-i
 
 sudo gem install rails bundler
 
-cd $HOME_DIR
+sudo mkdir /webapps/
+sudo chown vagrant:vagrant /webapps
+
+cd $HYDRA_DIR
 
 rails new hydra
+# Can also instantiate project with mysql with following: rails hydra -d mysql
 
 cd hydra
 
@@ -29,6 +33,9 @@ printf "\n gem 'therubyracer', platforms: :ruby" >> Gemfile
 bundle install
 
 rails generate hydra:install
+sudo chown -R vagrant:vagrant /webapps/hydra/
+
+sudo chown -R vagrant:vagrant hydra/
 
 sudo find ./config -type f -exec sed -i 's/8983/8080/g' {} +
 
