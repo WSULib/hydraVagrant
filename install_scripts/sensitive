@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# Contain sensitive variables for installs
-#
-
-VH_NAME="hydra_dev"
-SQL_PASSWORD="bad_password"
