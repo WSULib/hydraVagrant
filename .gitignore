@@ -1,6 +1,5 @@
 #Vagrant#
 .vagrant/
-./install_scripts/sensitive
 
 # Compiled source #
 ###################

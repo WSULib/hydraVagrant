@@ -8,5 +8,5 @@ Vagrant/bash install and configuration of Hydra, FC4, Solr, and Fuseki (very muc
 
 #### Bash install (still work in progress)
 1) Assuming you have a copy of Ubuntu 14.04 running, edit sensitive_example (found in install_scripts folders) to sensitive and edit.
-2) Invoke install.sh
+2) Run sudo bash install.sh
 3) Navigate to host_machine_ip:3000 when installation is finished.
