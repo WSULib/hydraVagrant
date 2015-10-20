@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Contain sensitive variables for installs
+#
+
+VH_NAME="name of what you are calling your Hydra virtualhost minus the .conf ending"
+SQL_PASSWORD="my_password"

@@ -11,10 +11,14 @@ if [ -f "$SHARED_DIR/install_scripts/config" ]; then
   . $SHARED_DIR/install_scripts/config
 fi
 
+if [ -f "$SHARED_DIR/install_scripts/sensitive" ]; then
+  . $SHARED_DIR/install_scripts/sensitive
+fi
+
 sudo apt-get -y install apache2 apache2-mpm-prefork apache2-prefork-dev
 
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password bad_password'
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password bad_password'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $SQL_PASSWORD'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $SQL_PASSWORD'
 
 sudo apt-get install -y mysql-server mysql-client ruby-mysql libmysqlclient-dev libcurl4-openssl-dev
 sudo gem install mysql passenger
@@ -36,7 +40,7 @@ sudo printf "\nLoadModule passenger_module $GEM_LOCATION/gems/$PASSENGER_VERSION
 
 sudo a2enmod rewrite
 
-sudo touch /etc/apache2/sites-available/hydra_dev.conf
+sudo touch /etc/apache2/sites-available/$VH_NAME.conf
 
 sudo printf "<VirtualHost *:80>
     #ServerName example.com
@@ -54,8 +58,10 @@ sudo printf "<VirtualHost *:80>
       Options FollowSymLinks
       Allow from all
     </Directory>
-</VirtualHost>" >> /etc/apache2/sites-available/hydra_dev.conf
+</VirtualHost>" >> /etc/apache2/sites-available/$VH_NAME.conf
 
 sudo a2dissite 000-default
-sudo a2ensite hydra_dev
+sudo a2ensite $VH_NAME
 sudo service apache2 restart
+
+echo "Now go to IP:3000 to see your Hydra instance"

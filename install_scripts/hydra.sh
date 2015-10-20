@@ -71,11 +71,5 @@ sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7/webapps/solr/WEB-INF/lib/
 
 sudo service tomcat7 restart
 
-echo "Now run the following commands:"
-echo "vagrant ssh"
-echo "cd hydra/"
-echo "sudo rails server -b 0.0.0.0"
-echo "Now go to IP:3000 to see your Hydra instance"
-
 
 
