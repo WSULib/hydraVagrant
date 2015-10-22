@@ -13,7 +13,7 @@ fi
 add-apt-repository ppa:brightbox/ruby-ng
 apt-get update -qq
 
-apt-get install -y software-properties-common ruby2.2 ruby2.2-dev oracle-java8-installer oracle-java8-set-default zlib1g-dev unzip libsqlite3-dev xmlstarlet
+apt-get install -y ruby2.2 ruby2.2-dev zlib1g-dev libsqlite3-dev xmlstarlet
 
 sudo gem install rails bundler
 
@@ -23,7 +23,7 @@ sudo chown vagrant:vagrant /webapps
 rails new /webapps/hydra
 # Can also instantiate project with mysql with following: rails hydra -d mysql
 
-cd $HYDRA_DIR
+pushd $HYDRA_DIR
 
 printf "\n gem 'hydra', '9.1.0.rc1'" >> Gemfile
 printf "\n gem 'therubyracer', platforms: :ruby" >> Gemfile
@@ -46,12 +46,14 @@ printf "\n class Application < Rails::Application
   config.web_console.whitelisted_ips = '10.0.2.2'
 end" >> ./config/environments/development.rb
 
+popd
+
 # Copy Hydra Solr conf files (solrconf.xml and schema.xml) to Solr core location
 	sudo mv $SOLR_HOME/collection1/conf/solrconfig.xml $SOLR_HOME/collection1/conf/solrconfig-old.xml
 	sudo mv $SOLR_HOME/collection1/conf/schema.xml $SOLR_HOME/collection1/conf/schema-old.xml
 
-	sudo cp /home/vagrant/hydra/solr_conf/conf/solrconfig.xml $SOLR_HOME/collection1/conf/solrconfig.xml
-	sudo cp /home/vagrant/hydra/solr_conf/conf/schema.xml $SOLR_HOME/collection1/conf/schema.xml
+	sudo cp $HYDRA_DIR/solr_conf/conf/solrconfig.xml $SOLR_HOME/collection1/conf/solrconfig.xml
+	sudo cp $HYDRA_DIR/solr_conf/conf/schema.xml $SOLR_HOME/collection1/conf/schema.xml
 	sudo chown tomcat7:tomcat7 $SOLR_HOME/collection1/conf/solrconfig.xml $SOLR_HOME/collection1/conf/schema.xml
 
 # Fix Version number issue (aka Hydra's default solr version does not match current)
